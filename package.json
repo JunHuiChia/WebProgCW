@@ -1,0 +1,35 @@
+{
+  "name": "webprogcw",
+  "version": "1.0.0",
+  "description": "Plagiarism Detection Tool",
+  "main": "server.js",
+  "dependencies": {
+    "express": "^4.17.1",
+    "multer": "^1.4.2"
+  },
+  "devDependencies": {
+    "eslint": "^7.22.0",
+    "eslint-config-portsoc": "github:portsoc/eslint-config-portsoc"
+  },
+  "eslintConfig": {
+    "extends": "portsoc",
+    "root": true,
+    "env": {
+      "browser": true
+    }
+  },
+  "scripts": {
+    "test": "eslint ./*.js",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/UP937100/WebProgCW.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/UP937100/WebProgCW/issues"
+  },
+  "homepage": "https://github.com/UP937100/WebProgCW#readme"
+}
