@@ -10,9 +10,10 @@
 <body>
     
     <!-- <div id="dragArea" draggable="true"> Drag file here</div> -->
-    <input id="fileInput" type="file" accept="any">
+    <input id="fileInput" type="file" accept="any" multiple>
     <button id="showFile" onclick="upload()">Test</button>
-    <div id="outputText"></div>
+    <pre><code id="outputText"></code></pre>
+    <button id="showDBFiles" onclick="getAll()">Get all</button>
 
 </body>
 <script src="/main.js"></script>

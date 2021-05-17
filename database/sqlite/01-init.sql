@@ -1,0 +1,6 @@
+-- Up
+CREATE TABLE IF NOT EXISTS Files (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT,
+    content TEXT
+)

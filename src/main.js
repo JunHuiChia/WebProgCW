@@ -1,21 +1,32 @@
 const fileToUpload = document.querySelector('#fileInput');
 
 async function upload() {
-  const file = new FormData();
   if (fileToUpload.files.length) {
+    const file = new FormData();
     file.append('file', fileToUpload.files[0]);
+    const response = await fetch('upload', {
+      method: 'POST',
+      body: file,
+    });
+
+    if (response.ok) {
+      const content = await response.json();
+      outputData(content);
+    } else {
+      console.log('failed');
+    }
+  } else {
+    outputData('No File selected');
   }
+}
 
-  const response = await fetch('upload', {
-    method: 'POST',
-    body: file,
-  });
-
+async function getAll() {
+  const response = await fetch('getData');
   if (response.ok) {
     const content = await response.json();
-    outputData(content);
+    console.log(content);
   } else {
-    console.log('failed');
+    console.log('dont work');
   }
 }
 

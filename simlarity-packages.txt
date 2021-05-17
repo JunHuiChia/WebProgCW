@@ -1,0 +1,5 @@
+https://www.npmjs.com/package/leven
+
+https://www.npmjs.com/package/string-similarity
+
+https://www.npmjs.com/package/similarity
