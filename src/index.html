@@ -9,11 +9,21 @@
 </head>
 <body>
     
-    <!-- <div id="dragArea" draggable="true"> Drag file here</div> -->
-    <input id="fileInput" type="file" accept="any" multiple>
-    <button id="showFile" onclick="upload()">Test</button>
-    <pre><code id="outputText"></code></pre>
-    <button id="showDBFiles" onclick="getAll()">Get all</button>
+    <div class="mainPage">
+        <div class="dropFile">
+            <label for="fileInput" class="uploadBoxText fileLabel">Choose a file</label>
+            <div id="dragText" class="uploadBoxText noselect"> or drag here</div>
+            <input id="fileInput" type="file" accept="any" multiple>
+            <div id="fileName"></div>
+        </div>
+
+
+        <button id="showFile" onclick="upload()">Test</button>
+        <pre><code id="outputText"></code></pre>
+        <button id="showDBFiles" onclick="getAll()">Get all</button>
+
+    </div>
+    
 
 </body>
 <script src="/main.js"></script>

@@ -1,5 +1,6 @@
 import sqlite3 from 'sqlite3';
 import { open } from 'sqlite';
+import uuid from 'uuid-random';
 
 import fs from 'fs';
 
@@ -16,30 +17,14 @@ async function init() {
 
 const dbCon = init();
 
-export async function getID() {
+export async function getAll() {
   const db = await dbCon;
   return db.all('SELECT * FROM files');
 }
 
-// export async function getID() {
-  // const db = await dbCon;
-  // let data = {};
-  // const files = await db.all('SELECT * FROM files', []);
-  // files.forEach((file) => {
-  //   console.log(file);
-  // });
-
-  // await db.all('SELECT * FROM files', [], async (err, rows) => {
-  //   if (err) {
-  //     console.log(err.message);
-  //     throw err;
-  //   } else {
-  //     await rows.forEach((row) => {
-  //       console.log('row:', row);
-  //       data = row;
-  //       return row;
-  //     });
-  //   }
-  // });
-  // console.log(data);
-// }
+export async function addFile(name, path) {
+  const db = await dbCon;
+  const id = uuid();
+  await db.run('INSERT INTO Files VALUES (?,?,?)', [id, name, path]);
+  return getAll();
+}

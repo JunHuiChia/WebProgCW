@@ -1,9 +1,49 @@
+:root{
+    --colour-palette-1: #3c3c4b;
+    --colour-palette-2: #6163a8;
+    --colour-palette-3: #963D5A;
+    --colour-palette-4: #DA6466;
+    --colour-palette-5: #6ac7ad;
+    
+    --colour-red: #9E2E37;
+    
+    --colour-text: #2e1a3d;
+    --colour-text-dark: #220e30;
+    
+    --black: #0a0a0a;
+    
+    --background-colour: #323244;
+}
+
+.noselect{
+    user-select: none;
+}
+
+html{
+    min-width: none;
+    min-height: 100%;
+    font-family: 'Poppins', sans-serif;
+}
+
 body{
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    margin: 20px;
+    min-height: 640px;
+    background-color: var(--colour-palette-1);
+}
+
+.mainPage{
+    background-color: var(--background-colour);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    min-height: 850px;
+    min-width: 1200px;
+    box-shadow: 2px 2px 6px var(--background-colour);
+
 }
 
 #dragArea{
@@ -13,4 +53,47 @@ body{
     width: 200px;
     height: 200px;
     margin: 20px;
+}
+
+.dropFile{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    width: 45vw;
+    min-height: 40vh;
+    
+    border: var(--colour-palette-0) 1px solid;
+    box-shadow: 2px 2px 6px var(--black);
+    background-color: var(--colour-palette-2);
+
+    outline: 2px dashed var(--colour-palette-1);
+    outline-offset: -10px;
+}
+
+#fileInput {
+    display: none;
+}
+
+.uploadBoxText{
+    color: var(--colour-text);
+    margin: 0 0.3rem;
+    font-size: 2rem;
+}
+
+.fileLabel{
+    font-weight: 900;
+    cursor: pointer;
+}
+
+.fileLabel:hover{
+    color: var(--colour-palette-5)
+}
+
+#fileName{
+    color: var(--colour-text-dark);
+    margin-top: 2.5rem;
+    font-size: 1.5rem;
+    font-weight: 700;
 }

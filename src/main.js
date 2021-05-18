@@ -33,6 +33,12 @@ async function getAll() {
 function handleData(e) {
   e.preventDefault();
   fileToUpload.files = e.dataTransfer.files;
+  showFiles();
+}
+
+function showFiles() {
+  const fileText = document.querySelector('#fileName');
+  fileText.textContent = `File: ${fileToUpload.files[0].name}`;
 }
 
 function outputData(data) {
@@ -41,11 +47,11 @@ function outputData(data) {
   output.textContent = data;
 }
 
-
 function dragOverHandler(e) { e.preventDefault(); }
 
-const mainArea = document.querySelector('#fileInput');
+const mainArea = document.querySelector('.dropFile');
 
 mainArea.addEventListener('dragover', dragOverHandler);
 mainArea.addEventListener('drop', handleData);
 
+fileToUpload.addEventListener('change', showFiles);
