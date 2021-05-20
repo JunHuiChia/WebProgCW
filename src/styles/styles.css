@@ -209,7 +209,13 @@ body{
     background-color: green;
 }
 
-.plagBar{
+.linePlagBar{
+    height: 20px;
+    width: 250px;
+    background-color: red;
+}
+
+.filePlagBar{
     height: 20px;
     width: 250px;
     background-color: red;

@@ -55,6 +55,31 @@ async function overallPlag(fileData, lineData) {
   filesCompared.textContent = `${fileCounter}`;
 
   reportArea.classList.remove('hidden');
+
+  detailedReport(filePercent, linePercent);
+}
+
+function detailedReport(filePercent, linePercent) {
+  const filePlagPercent = document.querySelector('#filePlagPercent');
+  const fileUniquePercent = document.querySelector('#fileUniquePercent');
+
+  const linePlagPercent = document.querySelector('#linePlagPercent');
+  const lineUniquePercent = document.querySelector('#lineUniquePercent');
+
+  const fileBar = document.querySelector('.filePlagBar');
+  const lineBar = document.querySelector('.linePlagBar');
+
+  filePercent = Math.round(filePercent * 100);
+  linePercent = Math.round(linePercent * 100);
+
+  filePlagPercent.textContent = `${filePercent}%`;
+  fileUniquePercent.textContent = `${100 - filePercent}%`;
+
+  linePlagPercent.textContent = `${linePercent}%`;
+  lineUniquePercent.textContent = `${100 - linePercent}%`;
+
+  fileBar.style.width = `${filePercent * 5}px`;
+  lineBar.style.width = `${linePercent * 5}px`;
 }
 
 function moreDetail() {
