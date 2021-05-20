@@ -79,6 +79,12 @@ body{
     display: none;
 }
 
+.hint{
+    font-size: 0.8rem;
+    color: var(--colour-text);
+    margin-top: 0.5rem;
+}
+
 .uploadBoxText{
     color: var(--colour-text);
     margin: 0 0.3rem;
@@ -95,6 +101,8 @@ body{
 }
 
 #fileName{
+    display: flex;
+    flex-direction: column;
     color: var(--colour-text-dark);
     margin-top: 2.5rem;
     font-size: 1.5rem;
@@ -125,7 +133,7 @@ body{
 
 /* Report area */
 
-#reportArea{
+#reportArea, #reportAreaMulti{
     display: flex;
 
     width: 55vw;
@@ -137,14 +145,14 @@ body{
     margin: 2rem;
 }
 
-#reportAreaTitle{
+#reportAreaTitle, #reportAreaTitleMulti{
     font-size: 2rem;
     font-weight: 600;
     margin-top: 1rem;
     text-decoration: underline;
 }
 
-#overallPlag{
+#overallPlag, #multiFile{
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -154,7 +162,7 @@ body{
     margin: 1rem;
 }
 
-#userFileName1, #userFileName2, #overallPlagPercent, #numberCompared{
+.bold{
     font-weight: 700;
 }
 

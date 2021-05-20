@@ -11,33 +11,47 @@
     
     <div class="mainPage">
         <div class="title"> Plagiarism Detector </div>
-        <div class="dropFileArea" ondragover="this.style.opacity='0.6'" ondragleave="this.style.opacity='1'" ondrop="this.style.opacity='1'">
+        <div class="dropFileArea">
             <label for="fileInput" class="uploadBoxText fileLabel">Choose a file</label>
             <div id="dragText" class="uploadBoxText noselect"> or drag here</div>
+            <span class="hint">* maximum 2 files</span>
             <input id="fileInput" type="file" accept="any" multiple>
             <div id="fileName"></div>
         </div>
 
         <button id="checkPlagBtn" class="btn">Check Plagiarism</button>
 
-        <div id="reportArea" class="reportArea ">
+        <div id="reportAreaMulti" class="reportAreaMulti hidden">
+            <div id="reportAreaTitleMulti">Plagiarism Report</div>
+            <div id="multiFile">
+                <span>
+                    <span id="userMultiFileName1" class="bold"></span> 
+                    is 
+                    <span id="userMultiFileSimilar" class="bold"></span>
+                    plagiarized verses
+                    <span id="userMultiFileName2" class="bold"></span>
+                </span>
+            </div>
+        </div> 
+
+        <div id="reportArea" class="reportArea hidden">
             <div id="reportAreaTitle">Plagiarism Report</div>
             <div id="overallPlag">
                 <span>
-                    <span id="userFileName1">test.txt</span>
+                    <span id="userFileName1" class="bold">test.txt</span>
                     is 
-                    <span id="overallPlagPercent">53%</span> 
+                    <span id="overallPlagPercent" class="bold">53%</span> 
                     plagiarized.
                 </span>
                 <span>
-                    <span id="userFileName2">test.txt</span> 
+                    <span id="userFileName2" class="bold">test.txt</span> 
                     was compared to 
-                    <span id="numberCompared">3</span>
+                    <span id="numberCompared" class="bold">3</span>
                     files in our database.
                     </span>
             </div>
             <button id="moreDetailBtn" class="btn">View details</button>
-            <div id="detailedReportArea" class="detailedReportArea ">
+            <div id="detailedReportArea" class="detailedReportArea hidden">
                 <div id="fileReport" class="reportBox">
                     <div class="reportHeader">File report</div>
                     <div class="reportText">Files are compared against other files as a whole</div>

@@ -2,7 +2,13 @@
 
 Plagiarism Detection Tool
 
-[Coursework Specification](https://docs.google.com/document/d/18H_Im8dl7ZMhPV0ggnE4mtpybX0KJTW7niPJWgM_Pag/edit#heading=h.9lsrx2stf4fq)
+## Features
+
+- Single file and 2 file uploading
+- Single file and 2 files produces different reports
+- Single file uploading and comparison has more detailed reports
+
+<!-- [Coursework Specification](https://docs.google.com/document/d/18H_Im8dl7ZMhPV0ggnE4mtpybX0KJTW7niPJWgM_Pag/edit#heading=h.9lsrx2stf4fq) -->
 
 ## Core Requirements
 
@@ -11,12 +17,12 @@ Plagiarism Detection Tool
 - Keep a database of past submissions that are automatically included in analysis.
 - Output a similarity report of some form.
 
-## Optional Features
+<!-- ## Optional Features
 
 - Drag & Drop
 - Multiple files submissions
 
-More optional features can be added if needed.
+More optional features can be added if needed. -->
 
 ## Requirements
 

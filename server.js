@@ -5,33 +5,61 @@ import multer from 'multer';
 import fs from 'fs';
 import ssim from 'string-similarity';
 
-// const express = require('express');
-// const multer = require('multer');
-// const fs = require('fs');
 
-// const config = require('./config.json');
-
-// const configuredMulter = multer(config);
-// const single = configuredMulter.single('test');
 const app = express();
 app.use(express.static('src', { extensions: ['html'] }));
 
-const uploader = multer({
-  dest: 'uploads',
-});
+// const uploader = multer({storage: storage }).array('files', 3);
+const uploader = multer({ dest: 'uploads' });
 
-async function upload(req, res) {
-  const content = await req.file;
+// Checks whether there is more than 1 file
+async function uploadFileCheck(req, res) {
+  if (req.files.length <= 1) {
+    await uploadSingle(req, res);
+  } else {
+    await uploadMultiple(req, res);
+  }
+}
 
-  const filename = content.originalname;
-  const newfilename = content.filename;
+// Function for multiple files checking
+async function uploadMultiple(req, res) {
+  const userFiles = await req.files;
 
-  const response = await db.addFile(filename, newfilename);
+  const filesToCompare = await addMultipleToDB(userFiles);
 
-  const fileChecker = await checkFilePlag(filename, newfilename, response);
-  const lineChecker = await checkLinePlag(filename, newfilename, response);
+  const fileChecker = await checkMultiFilePlag(filesToCompare[0], filesToCompare[1]);
+
+  res.json(fileChecker);
+}
+
+async function addMultipleToDB(userFiles) {
+  const filesToCompare = [];
+
+  await userFiles.forEach(file => {
+    const filename = file.originalname;
+    const newfilename = file.filename;
+    db.addFile(filename, newfilename);
+    filesToCompare.push({ name: filename, filepath: newfilename });
+  });
+
+  return filesToCompare;
+}
+
+// Function for single files checking / uploads
+async function uploadSingle(req, res) {
+  const userFiles = await req.files;
+
+  const filename = userFiles[0].originalname;
+  const newfilename = userFiles[0].filename;
+
+  const filesToDb = await db.addFile(filename, newfilename);
+
+  const fileChecker = await checkFilePlag(filename, newfilename, filesToDb);
+  const lineChecker = await checkLinePlag(filename, newfilename, filesToDb);
 
   const finalChecker = { file: fileChecker, line: lineChecker };
+
+  console.log(finalChecker);
 
   res.json(finalChecker);
 }
@@ -50,6 +78,19 @@ async function checkFilePlag(name, filepath, dbfilepath) {
   });
 
   // console.log(similarityData);
+  return similarityData;
+}
+
+async function checkMultiFilePlag(file1, file2) {
+  const similarityData = [];
+
+  const data1 = fs.readFileSync('./uploads/' + file1.filepath, 'utf8');
+
+  const data2 = fs.readFileSync('./uploads/' + file2.filepath, 'utf8');
+
+  const similar = ssim.compareTwoStrings(data1, data2);
+  await similarityData.push({ filename1: file1.name, filename2: file2.name, similar: similar, type: 'file' });
+
   return similarityData;
 }
 
@@ -83,7 +124,6 @@ async function checkLinePlag(name, filepath, dbfilepath) {
   return similarityData;
 }
 
-
 async function getAll(req, res) {
   // console.log(await db.getID());
   res.json(await db.getAll());
@@ -97,7 +137,7 @@ function asyncWrap(f) {
 }
 
 // app.get('/test', express.json(), asyncWrap(getTest));
-app.post('/upload', uploader.single('file'), express.json(), asyncWrap(upload));
+app.post('/upload', uploader.array('files'), express.json(), asyncWrap(uploadFileCheck));
 app.get('/getData', asyncWrap(getAll));
 
 console.log('Running');

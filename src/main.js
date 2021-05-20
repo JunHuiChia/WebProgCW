@@ -1,16 +1,28 @@
 
 async function upload() {
   if (fileToUpload.files.length) {
-    const file = new FormData();
-    file.append('file', fileToUpload.files[0]);
+    const payload = new FormData();
+
+    if (fileToUpload.files.length > 1 && fileToUpload.files.length <= 2) {
+      for (let i = 0; i < fileToUpload.files.length; i++) {
+        payload.append('files', fileToUpload.files[i]);
+      }
+    } else if (fileToUpload.files.length <= 1) {
+      payload.append('files', fileToUpload.files[0]);
+    } else {
+      outputError('Too many files');
+    }
     const response = await fetch('upload', {
       method: 'POST',
-      body: file,
+      body: payload,
     });
 
     if (response.ok) {
       const content = await response.json();
-      if (content.file.length === 0 || content.line.length === 0) {
+      console.log(content);
+      if (content.file === undefined) {
+        multiFileComparison(content);
+      } else if (content.file.length === 0 || content.line.length === 0) {
         outputError('No files in the database to check');
       } else {
         overallPlag(content.file, content.line);
@@ -23,6 +35,26 @@ async function upload() {
   }
 }
 
+function multiFileComparison( fileData ) {
+  const userFileName1 = document.querySelector('#userMultiFileName1');
+  const userFileName2 = document.querySelector('#userMultiFileName2');
+  const userFileSimilar = document.querySelector('#userMultiFileSimilar');
+  const reportArea = document.querySelector('#reportArea');
+  const reportAreaMulti = document.querySelector('#reportAreaMulti');
+
+  const comparedFileData = fileData[0];
+
+  userFileName1.textContent = comparedFileData.filename1;
+  userFileName2.textContent = comparedFileData.filename2;
+
+
+  reportArea.classList.add('hidden');
+  reportAreaMulti.classList.remove('hidden');
+
+  const similarPercent = Math.round(comparedFileData.similar * 100);
+  userFileSimilar.textContent = `${similarPercent}%`;
+}
+
 async function overallPlag(fileData, lineData) {
   console.log(fileData, lineData);
   const userFileName1 = document.querySelector('#userFileName1');
@@ -30,6 +62,8 @@ async function overallPlag(fileData, lineData) {
   const plagPercent = document.querySelector('#overallPlagPercent');
   const filesCompared = document.querySelector('#numberCompared');
   const reportArea = document.querySelector('#reportArea');
+  const reportAreaMulti = document.querySelector('#reportAreaMulti');
+
 
   let fileCounter = 0;
   let filePercent = 0;
@@ -54,6 +88,7 @@ async function overallPlag(fileData, lineData) {
   plagPercent.textContent = `${overallPercent}%`;
   filesCompared.textContent = `${fileCounter}`;
 
+  reportAreaMulti.classList.add('hidden');
   reportArea.classList.remove('hidden');
 
   detailedReport(filePercent, linePercent);
@@ -90,7 +125,22 @@ function moreDetail() {
 
 function showFiles() {
   const fileText = document.querySelector('#fileName');
-  fileText.textContent = `File: ${fileToUpload.files[0].name}`;
+  while (fileText.firstChild) {
+    fileText.removeChild(fileText.lastChild);
+  }
+
+  if (fileToUpload.files.length > 2) {
+    outputError('Too many files');
+  }
+  else if (fileToUpload.files.length > 1) {
+    for (let i = 0; i < fileToUpload.files.length; i++) {
+      const newSpan = document.createElement('span');
+      newSpan.textContent = `File: ${fileToUpload.files[i].name}`;
+      fileText.appendChild(newSpan);
+    }
+  } else {
+    fileText.textContent = `File: ${fileToUpload.files[0].name}`;
+  }
 }
 
 function outputError(data) {
@@ -99,17 +149,30 @@ function outputError(data) {
 }
 
 function handleData(e) {
+  opacityChange(1);
   e.preventDefault();
   fileToUpload.files = e.dataTransfer.files;
+  console.log(fileToUpload.files);
   showFiles();
 }
 
+function opacityChange(opacityValue) {
+  mainArea.style.opacity = `${opacityValue}`;
+  console.log(opacityValue);
+}
+
 function dragOverHandler(e) {
+  opacityChange(0.6);
+  e.preventDefault();
+}
+function dragLeaveHandler(e) {
+  opacityChange(1);
   e.preventDefault();
 }
 
 const mainArea = document.querySelector('.dropFileArea');
 mainArea.addEventListener('dragover', dragOverHandler);
+mainArea.addEventListener('dragleave', dragLeaveHandler);
 mainArea.addEventListener('drop', handleData);
 
 const fileToUpload = document.querySelector('#fileInput');
