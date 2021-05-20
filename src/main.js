@@ -1,4 +1,3 @@
-const fileToUpload = document.querySelector('#fileInput');
 
 async function upload() {
   if (fileToUpload.files.length) {
@@ -11,23 +10,67 @@ async function upload() {
 
     if (response.ok) {
       const content = await response.json();
-      outputData(content);
+      if (content.file.length === 0 || content.line.length === 0) {
+        outputError('No files in the database to check');
+      } else {
+        overallPlag(content.file, content.line);
+      }
     } else {
       console.log('failed');
     }
   } else {
-    outputData('No File selected');
+    outputError('No File selected');
   }
 }
 
-async function getAll() {
-  const response = await fetch('getData');
-  if (response.ok) {
-    const content = await response.json();
-    console.log(content);
-  } else {
-    console.log('dont work');
-  }
+async function overallPlag(fileData, lineData) {
+  console.log(fileData, lineData);
+  const userFileName1 = document.querySelector('#userFileName1');
+  const userFileName2 = document.querySelector('#userFileName2');
+  const plagPercent = document.querySelector('#overallPlagPercent');
+  const filesCompared = document.querySelector('#numberCompared');
+  const reportArea = document.querySelector('#reportArea');
+
+  let fileCounter = 0;
+  let filePercent = 0;
+  let linePercent = 0;
+
+  await fileData.forEach(file => {
+    filePercent += file.similar;
+    fileCounter++;
+  });
+
+  await lineData.forEach(file => {
+    linePercent += file.similar;
+  });
+
+  filePercent = filePercent / fileCounter;
+  linePercent = linePercent / fileCounter;
+
+  const overallPercent = Math.round(((filePercent + linePercent) * 100) / 2);
+
+  userFileName1.textContent = fileData[0].filename1;
+  userFileName2.textContent = fileData[0].filename1;
+  plagPercent.textContent = `${overallPercent}%`;
+  filesCompared.textContent = `${fileCounter}`;
+
+  reportArea.classList.remove('hidden');
+}
+
+function moreDetail() {
+  const moreDetailBtn = document.querySelector('#detailedReportArea');
+  moreDetailBtn.classList.remove('hidden');
+}
+
+
+function showFiles() {
+  const fileText = document.querySelector('#fileName');
+  fileText.textContent = `File: ${fileToUpload.files[0].name}`;
+}
+
+function outputError(data) {
+  const errorText = document.querySelector('#fileName');
+  errorText.textContent = data;
 }
 
 function handleData(e) {
@@ -36,22 +79,19 @@ function handleData(e) {
   showFiles();
 }
 
-function showFiles() {
-  const fileText = document.querySelector('#fileName');
-  fileText.textContent = `File: ${fileToUpload.files[0].name}`;
+function dragOverHandler(e) {
+  e.preventDefault();
 }
 
-function outputData(data) {
-  const output = document.querySelector('#outputText');
-  console.log('Data: ', data);
-  output.textContent = data;
-}
-
-function dragOverHandler(e) { e.preventDefault(); }
-
-const mainArea = document.querySelector('.dropFile');
-
+const mainArea = document.querySelector('.dropFileArea');
 mainArea.addEventListener('dragover', dragOverHandler);
 mainArea.addEventListener('drop', handleData);
 
+const fileToUpload = document.querySelector('#fileInput');
 fileToUpload.addEventListener('change', showFiles);
+
+const checkPlagBtn = document.querySelector('#checkPlagBtn');
+checkPlagBtn.addEventListener('click', upload);
+
+const moreDetailBtn = document.querySelector('#moreDetailBtn');
+moreDetailBtn.addEventListener('click', moreDetail);

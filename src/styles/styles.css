@@ -3,14 +3,13 @@
     --colour-palette-2: #6163a8;
     --colour-palette-3: #963D5A;
     --colour-palette-4: #DA6466;
-    --colour-palette-5: #6ac7ad;
     
-    --colour-red: #9E2E37;
     
+    --colour-palette-5-bright: #9fffe4;
+    --colour-palette-5: #61c0a5;
+        
     --colour-text: #2e1a3d;
     --colour-text-dark: #220e30;
-    
-    --black: #0a0a0a;
     
     --background-colour: #323244;
 }
@@ -19,9 +18,12 @@
     user-select: none;
 }
 
+.hidden{
+    visibility: hidden;
+    display: none !important;
+}
+
 html{
-    min-width: none;
-    min-height: 100%;
     font-family: 'Poppins', sans-serif;
 }
 
@@ -34,38 +36,39 @@ body{
     background-color: var(--colour-palette-1);
 }
 
+.title{
+    font-size: 3rem;
+    font-weight: 700;
+    color: var(--colour-palette-3);
+    margin: 2rem;
+}
+
 .mainPage{
     background-color: var(--background-colour);
     display: flex;
-    justify-content: center;
+    justify-content: space-evenly;
     align-items: center;
     flex-direction: column;
-    min-height: 850px;
-    min-width: 1200px;
+    min-height: 80vh;
+    min-width: 80vw;
     box-shadow: 2px 2px 6px var(--background-colour);
 
 }
 
-#dragArea{
-    text-align: center;
-    align-self: center;
-    border: 3px solid blue;
-    width: 200px;
-    height: 200px;
-    margin: 20px;
-}
+/* Drag and drop area */
 
-.dropFile{
+.dropFileArea{
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
 
-    width: 45vw;
+    width: 35vw;
     min-height: 40vh;
+    margin: 1.5rem;
     
     border: var(--colour-palette-0) 1px solid;
-    box-shadow: 2px 2px 6px var(--black);
+    box-shadow: 2px 2px 6px black;
     background-color: var(--colour-palette-2);
 
     outline: 2px dashed var(--colour-palette-1);
@@ -96,4 +99,118 @@ body{
     margin-top: 2.5rem;
     font-size: 1.5rem;
     font-weight: 700;
+}
+
+.btn{
+    cursor: pointer;
+
+    width: 200px;
+    height: 50px;
+
+    background-color: var(--colour-palette-5);
+    border: solid 1px var(--colour-palette-5-bright);
+    border-radius: 20px;
+    color: var(--colour-text-dark);
+
+    font-size: 1.1rem;
+    font-weight: 550;
+
+    margin: 16px;
+    transition: all 0.2s;
+}
+
+.btn:hover{
+    background-color: var(--colour-palette-5-bright);
+}
+
+/* Report area */
+
+#reportArea{
+    display: flex;
+
+    width: 55vw;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    background-color: var(--colour-palette-2);
+    margin: 2rem;
+}
+
+#reportAreaTitle{
+    font-size: 2rem;
+    font-weight: 600;
+    margin-top: 1rem;
+    text-decoration: underline;
+}
+
+#overallPlag{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    font-size: 1.3rem;
+
+    margin: 1rem;
+}
+
+#userFileName1, #userFileName2, #overallPlagPercent, #numberCompared{
+    font-weight: 700;
+}
+
+.reportBox{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    align-items: center;
+
+    padding: 1.5rem;
+
+    border-top: #2e1a3d 2px solid;
+
+}
+
+.reportHeader{
+    width: 100%;
+    font-size: 2rem;
+    text-align: center;
+    text-decoration: underline;
+
+    margin: 1.5rem;
+}
+
+.reportText{
+    width: 100%;
+    text-align: center;
+}
+
+.percentagesBox{
+    display: flex;
+
+    align-items: center;
+    justify-content: space-evenly;
+
+    width: 100%;
+    margin-top: 1rem;
+
+}
+
+.percentages{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    font-size: 1.5rem;
+}
+
+.bar{
+    height: 20px;
+    width: 500px;
+    background-color: green;
+}
+
+.plagBar{
+    height: 20px;
+    width: 250px;
+    background-color: red;
 }

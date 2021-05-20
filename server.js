@@ -31,7 +31,7 @@ async function upload(req, res) {
   const fileChecker = await checkFilePlag(filename, newfilename, response);
   const lineChecker = await checkLinePlag(filename, newfilename, response);
 
-  const finalChecker = fileChecker.concat(lineChecker);
+  const finalChecker = { file: fileChecker, line: lineChecker };
 
   res.json(finalChecker);
 }

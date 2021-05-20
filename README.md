@@ -28,11 +28,11 @@ More optional features can be added if needed.
 - launch with npm start
 - **README.md file that explains key features**
 
-## Steps
+<!-- ## Steps
 
 - Basic web page set up
 - Accept files through page - try set up drag and drop events here
 - Able to read files and output to page to see if its working
 
 - Backend server - most likely express.js
-- Backend will do analysis on files for plagiarism
+- Backend will do analysis on files for plagiarism -->

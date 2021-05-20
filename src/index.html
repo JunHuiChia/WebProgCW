@@ -10,18 +10,75 @@
 <body>
     
     <div class="mainPage">
-        <div class="dropFile">
+        <div class="title"> Plagiarism Detector </div>
+        <div class="dropFileArea" ondragover="this.style.opacity='0.6'" ondragleave="this.style.opacity='1'" ondrop="this.style.opacity='1'">
             <label for="fileInput" class="uploadBoxText fileLabel">Choose a file</label>
             <div id="dragText" class="uploadBoxText noselect"> or drag here</div>
             <input id="fileInput" type="file" accept="any" multiple>
             <div id="fileName"></div>
         </div>
 
+        <button id="checkPlagBtn" class="btn">Check Plagiarism</button>
 
-        <button id="showFile" onclick="upload()">Test</button>
-        <pre><code id="outputText"></code></pre>
-        <button id="showDBFiles" onclick="getAll()">Get all</button>
+        <div id="reportArea" class="reportArea ">
+            <div id="reportAreaTitle">Plagiarism Report</div>
+            <div id="overallPlag">
+                <span>
+                    <span id="userFileName1">test.txt</span>
+                    is 
+                    <span id="overallPlagPercent">53%</span> 
+                    plagiarized.
+                </span>
+                <span>
+                    <span id="userFileName2">test.txt</span> 
+                    was compared to 
+                    <span id="numberCompared">3</span>
+                    files in our database.
+                    </span>
+            </div>
+            <button id="moreDetailBtn" class="btn">View details</button>
+            <div id="detailedReportArea" class="detailedReportArea ">
+                <div id="fileReport" class="reportBox">
+                    <div class="reportHeader">File report</div>
+                    <div class="reportText">Files are compared against other files as a whole</div>
 
+                    <div class="percentagesBox">
+                        <span class="percentages">
+                            <span id="filePlagPercent">0%</span>
+                            <span>Plagiarized</span>
+                        </span>
+                        <div class="bar">
+                            <div class="plagBar"></div>
+                        </div>
+                        <span class="percentages">
+                            <span id="fileUniquePercent">0%</span>
+                            <span>Unique</span>
+                        </span>
+                    </div>
+                    
+                </div>
+                <div id="lineReport" class="reportBox">
+                    <div class="reportHeader">Line report</div>
+                    <div class="reportText">Lines are compared against lines in other files</div>
+
+                    <div class="percentagesBox">
+                        <span class="percentages">
+                            <span id="linePlagPercent">0%</span>
+                            <span>Plagiarized</span>
+                        </span>
+                        <div class="bar">
+                            <div class="plagBar"></div>
+                        </div>
+                        <span class="percentages">
+                            <span id="lineUniquePercent">0%</span>
+                            <span>Unique</span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        
     </div>
     
 
