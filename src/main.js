@@ -2,7 +2,7 @@
 async function upload() {
   if (fileToUpload.files.length) {
     const payload = new FormData();
-
+    loading(true);
     if (fileToUpload.files.length > 1 && fileToUpload.files.length <= 2) {
       for (let i = 0; i < fileToUpload.files.length; i++) {
         payload.append('files', fileToUpload.files[i]);
@@ -25,6 +25,7 @@ async function upload() {
       } else if (content.file.length === 0 || content.line.length === 0) {
         outputError('No files in the database to check');
       } else {
+        loading(false);
         overallPlag(content.file, content.line);
         filePairs(content.file);
       }
@@ -173,6 +174,19 @@ function handleData(e) {
 function opacityChange(opacityValue) {
   mainArea.style.opacity = `${opacityValue}`;
   console.log(opacityValue);
+}
+
+function loading(load) {
+  const overlay = document.querySelector('.loadingOverlay');
+  const main = document.querySelector('.mainPage');
+
+  if (load === true) {
+    main.style.opacity = 0.6;
+    overlay.classList.remove('hidden');
+  } else {
+    main.style.opacity = 1;
+    overlay.classList.add('hidden');
+  }
 }
 
 function dragOverHandler(e) {
