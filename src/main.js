@@ -36,7 +36,7 @@ async function upload() {
   }
 }
 
-function multiFileComparison( fileData ) {
+function multiFileComparison(fileData) {
   const userFileName1 = document.querySelector('#userMultiFileName1');
   const userFileName2 = document.querySelector('#userMultiFileName2');
   const userFileSimilar = document.querySelector('#userMultiFileSimilar');
@@ -146,8 +146,7 @@ function showFiles() {
 
   if (fileToUpload.files.length > 2) {
     outputError('Too many files');
-  }
-  else if (fileToUpload.files.length > 1) {
+  } else if (fileToUpload.files.length > 1) {
     for (let i = 0; i < fileToUpload.files.length; i++) {
       const newSpan = document.createElement('span');
       newSpan.textContent = `File: ${fileToUpload.files[i].name}`;
