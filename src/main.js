@@ -21,8 +21,10 @@ async function upload() {
       const content = await response.json();
       console.log(content);
       if (content.file === undefined) {
+        loading(false);
         multiFileComparison(content);
       } else if (content.file.length === 0 || content.line.length === 0) {
+        loading(false);
         outputError('No files in the database to check');
       } else {
         loading(false);
@@ -30,9 +32,11 @@ async function upload() {
         filePairs(content.file);
       }
     } else {
+      loading(false);
       console.log('failed');
     }
   } else {
+    loading(false);
     outputError('No File selected');
   }
 }
