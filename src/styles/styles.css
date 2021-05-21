@@ -228,3 +228,17 @@ body{
     width: 250px;
     background-color: red;
 }
+
+.detailedReportArea {
+    width: 55vw;
+}
+
+#filePairList{
+    list-style-type: none;
+    padding: 0;
+    text-align: center;
+}
+
+#filePairList li{
+    padding: 0.5rem;
+}

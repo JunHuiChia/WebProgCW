@@ -26,6 +26,7 @@ async function upload() {
         outputError('No files in the database to check');
       } else {
         overallPlag(content.file, content.line);
+        filePairs(content.file);
       }
     } else {
       console.log('failed');
@@ -115,6 +116,20 @@ function detailedReport(filePercent, linePercent) {
 
   fileBar.style.width = `${filePercent * 5}px`;
   lineBar.style.width = `${linePercent * 5}px`;
+}
+
+function filePairs(fileData) {
+  const fileList = document.querySelector('#filePairList');
+
+  fileData.forEach(file => {
+    const newList = document.createElement('li');
+    const file1 = file.filename1;
+    const file2 = file.filename2;
+    const fileSimilarity = Math.round(file.similar * 100);
+
+    newList.textContent = `${file1} is ${fileSimilarity}% similar compared to ${file2}`;
+    fileList.appendChild(newList);
+  });
 }
 
 function moreDetail() {
